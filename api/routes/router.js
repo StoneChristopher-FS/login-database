@@ -72,20 +72,35 @@ router.post('/login', (req, res) => {
     // else
     // user returned with user info and a HASHED password
 
-    bcrypt.compare(req.body.password, user.hash, (err, result) => {
-        if(err) return res.status(501).json({message: err.message})
-        if(result) {
-            res.status(200).json({
-                message: 'Login - POST, Authoization Successful',
-                result: result,
-                name: req.body.firstName
-            })
+    db.findUser(req.body.email)
+    .then((user) => {
+        if(user) {
+            bcrypt.compare(req.body.password, user.password, (err, result) => {
+                if(err) return res.status(501).json({message: err.message})
+                if(result) {
+                    res.status(200).json({
+                        message: 'Login - POST, Authoization Successful',
+                        result: result,
+                        name: req.body.firstName
+                    });
+                } else {
+                    res.status(409).json({
+                        message: 'Authorization Failed'
+                    });
+                }
+            });
         } else {
             res.status(409).json({
-                message: 'Authorization Failed'
-            })
+                message: 'User not found, please signup before logging in'
+            });
         }
     })
+    .catch((err) => {
+        res.status(409).json({
+            message: 'Not able to search for user!',
+            error: err.message
+        });
+    });
 });
 
 router.get('/profile', (req, res) => {
