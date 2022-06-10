@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const options = require('../config/options');
-const userRoute = require('../api/routes/userRoute');
+const mongoose = require('mongoose')
+const router = require('../api/routes/router');
+require('dotenv').config();
 app.use(express.json());
 app.use(cors(options));
 
@@ -13,7 +15,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use('/users', userRoute);
+app.use('/users', router);
 
 // add middleware to handle and bad url paths
 app.use((req, res, next) => {
@@ -30,5 +32,15 @@ app.use((error, req, res, next) => {
         }
     });
 });
+
+// connect to mongodb
+mongoose.connect(process.env.mongoDBURL, (err) => {
+    if(err) {
+        console.error('Error', err.message)
+    }
+    else {
+        console.log('MongoDB Connection Successful')
+    }
+})
 
 module.exports = app;
