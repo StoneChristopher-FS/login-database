@@ -1,19 +1,10 @@
 const express = require('express');
-const req = require('express/lib/request');
 const app = express();
+const cors = require('cors');
+const options = require('../config/options');
 const userRoute = require('../api/routes/userRoute');
 app.use(express.json());
-
-// handle all CORS issues by supplying CORS headers
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-    if(req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'POST, PUT, PATCH, GET, DELETE');
-    }
-    next();
-});
+app.use(cors(options));
 
 app.get('/', (req, res) => {
     res.status(200).json({
@@ -23,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/users', userRoute);
+
 // add middleware to handle and bad url paths
 app.use((req, res, next) => {
     const error = new Error('NOT FOUND!!!');
@@ -38,7 +30,5 @@ app.use((error, req, res, next) => {
         }
     });
 });
-
-
 
 module.exports = app;
