@@ -44,6 +44,7 @@ router.post('/signup', (req, res) => {
                     db.saveUser(user)
                     .then((result) => {
                         res.status(201).json({
+                            message: 'User added successfully!',
                             name: result.firstName,
                             email: result.email
                         });
