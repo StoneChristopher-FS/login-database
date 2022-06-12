@@ -6,13 +6,6 @@ const User = require('../model/user');
 const db = require('../../db/db');
 
 router.post('/signup', (req, res) => {
-    // find a user by email
-    // if user then email exists
-    // else
-    // make our user model or object
-    // encrypt
-    // save to mongodb
-
     db.findUser(req.body.email)
     .then((user) => {
         if(user) {
@@ -68,11 +61,6 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    // find user by email
-    // if no user found then authorization failed
-    // else
-    // user returned with user info and a HASHED password
-
     db.findUser(req.body.email)
     .then((user) => {
         if(user) {
