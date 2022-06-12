@@ -38,7 +38,6 @@ describe('Database Functions', () => {-
         await connect();
 
         const login = await findUser(email)
-        console.log(login);
 
         expect(login.email).toEqual('cstone@hostingsite.com');
         expect(login.firstName).toEqual('Christopher');
