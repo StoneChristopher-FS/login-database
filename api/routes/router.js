@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../model/user');
 const db = require('../../db/db');
+const checkAuth = require('../../auth/checkAuth');
+const jwt = require('jsonwebtoken');
 
 router.post('/signup', (req, res) => {
     db.findUser(req.body.email)
@@ -67,10 +69,15 @@ router.post('/login', (req, res) => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if(err) return res.status(501).json({message: err.message})
                 if(result) {
+                    const email = req.body.email;
+                    const id = req.body.id;
+                    const token = jwt.sign({email: email, userId: id}, process.env.jwt_key)
+
                     res.status(200).json({
-                        message: 'Login - POST, Authoization Successful',
+                        message: 'Welcome , Authorization Successful',
                         result: result,
-                        name: req.body.firstName
+                        name: req.body.firstName,
+                        token: token
                     });
                 } else {
                     res.status(409).json({
@@ -92,10 +99,9 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/profile', (req, res) => {
+router.get('/profile', checkAuth, (req, res) => {   
     res.status(200).json({
-        message: 'User Profile - GET',
-        hostname: req.hostname
+        message: req.userData 
     });
 });
 
