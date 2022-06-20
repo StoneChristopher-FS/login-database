@@ -40,8 +40,15 @@ router.post('/signup', (req, res) => {
                     .then((result) => {
                         res.status(201).json({
                             message: 'User added successfully!',
-                            name: result.firstName,
-                            email: result.email
+                            firstName: result.firstName,
+                            lastName: result.lastName,
+                            email: result.email,
+                            password: req.body.password,
+                            hash: result.password,
+                            address: result.address,
+                            city: result.city,
+                            state: result.state,
+                            zipcode: result.zipcode
                         });
                     })
                     .catch((err) => {
@@ -69,9 +76,11 @@ router.post('/login', (req, res) => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if(err) return res.status(501).json({message: err.message})
                 if(result) {
+                    const firstName = user.firstName;
+                    const lastName = user.lastName;
                     const email = req.body.email;
                     const id = req.body.id;
-                    const token = jwt.sign({email: email, userId: id}, process.env.jwt_key)
+                    const token = jwt.sign({firstName: firstName, lastName: lastName, email: email, userId: id}, process.env.jwt_key)
 
                     res.status(200).json({
                         message: 'Welcome , Authorization Successful',
@@ -101,7 +110,8 @@ router.post('/login', (req, res) => {
 
 router.get('/profile', checkAuth, (req, res) => {   
     res.status(200).json({
-        message: req.userData 
+        message: "Token Verified Successfully",
+        info: req.userData 
     });
 });
 
