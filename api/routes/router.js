@@ -32,7 +32,7 @@ router.post('/signup', (req, res) => {
                         address: req.body.address,
                         city: req.body.city,
                         state: req.body.state,
-                        zipcode: req.body.zipcode
+                        zip: req.body.zip
                     });
 
                     // save to mongodb
@@ -48,7 +48,7 @@ router.post('/signup', (req, res) => {
                             address: result.address,
                             city: result.city,
                             state: result.state,
-                            zipcode: result.zipcode
+                            zip: result.zip
                         });
                     })
                     .catch((err) => {

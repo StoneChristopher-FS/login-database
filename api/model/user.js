@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema ({
         required: true
     },
 
-    zipcode: {
+    zip: {
         type: String,
         required: true
     }
