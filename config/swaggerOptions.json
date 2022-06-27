@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Post API Docs",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Christopher Stone",
+            "email": "cmstone@student.fullsail.edu"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001/users",
+            "description": "Local Server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/signup": {
+            "post": {
+                "tags": [
+                    "Signup"
+                ],
+                "summary": "Signup a user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "firstName": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "lastName": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "email": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "password": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "address": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "city": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "state": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "zip": {
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created"
+                    },
+                    "201": {
+                        "description": "User Created"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Unable to create user"
+                    },
+                    "501": {
+                        "description": "Unable to create user"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "User Login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                
+                                    "password": {
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successful"
+                    },
+                    "201": {
+                        "description": "Login Successful"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Login Failed!"
+                    },
+                    "501": {
+                        "description": "Login Failed!"
+                    }
+                } 
+            }
+        },
+        "/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "User Profile",
+                "responses": {
+                    "200": {
+                        "description": "Access Granted"
+                    },
+                    "201": {
+                        "description": "Access Granted"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Access Denied!"
+                    },
+                    "501": {
+                        "description": "Access Denied!"
+                    }
+                } 
+            }
+        }
+    }
+}

@@ -7,6 +7,32 @@ const db = require('../../db/db');
 const checkAuth = require('../../auth/checkAuth');
 const jwt = require('jsonwebtoken');
 
+/**
+ * @swagger
+ * tags:
+ *  name:User Post
+ *  description: This is for the user posts
+ * /users/signup:
+ *  post:
+ *      tags: [User Post]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          title:
+ *                              type: string
+ *                              default: Why me
+ *                          post:
+ *                              type: string
+ *                              default: Because you are you
+ *      responses:
+ *          default:
+ *              description: Success
+ */
+
 router.post('/signup', (req, res) => {
     db.findUser(req.body.email)
     .then((user) => {
